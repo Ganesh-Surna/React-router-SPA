@@ -25,11 +25,12 @@ import {createBrowserRouter,RouterProvider} from "react-router-dom";
 import RootLayout from "./pages/RootLayout";
 import HomePage from "./pages/Home";
 import EventsPage,{loader as eventsLoaderFun} from "./pages/Events";
-import EventDetailsPage,{loader as eventDetailsLoader} from "./pages/EventDetails";
+import EventDetailsPage,{loader as eventDetailsLoader, action as deleteEventAction} from "./pages/EventDetails";
 import NewEventPage from "./pages/NewEvent";
 import EditEventPage from "./pages/EditEvent";
 import EventsLayoutPage from "./pages/EventsLayout";
 import ErrorPage from "./pages/Error";
+import {action as commonDynamicAction} from "./components/EventForm";
 
 const router=createBrowserRouter([
   {
@@ -47,11 +48,25 @@ const router=createBrowserRouter([
             element:<EventsPage/>,
             loader:eventsLoaderFun,
           },
-          {path:":eventId", element:<EventDetailsPage/>,
+          {
+            path:":eventId",
+            id:"event-details",
             loader:eventDetailsLoader,
+            action: deleteEventAction,
+            children:[
+              // { index:true, element:<EventDetailsPage/>,
+                // action: deleteEventAction,}
+              { path:"", element:<EventDetailsPage/>,},
+              {
+                path:"edit", element:<EditEventPage/>,
+                action: commonDynamicAction,
+              },
+            ]
           },
-          {path:"new", element:<NewEventPage/>},
-          {path:":eventId/edit", element:<EditEventPage/>},
+          { path:"new", element:<NewEventPage/>,
+            action: commonDynamicAction,
+          },
+          
         ]
       }
     ]
