@@ -1,9 +1,11 @@
-import { useFetcher } from 'react-router-dom';
-import classes from './NewsletterSignup.module.css';
-import { useEffect } from 'react';
+import { useFetcher, useActionData } from "react-router-dom";
+import classes from "./NewsletterSignup.module.css";
+import { useEffect } from "react";
 
-function NewsletterSignup() {
+export default function NewsletterSignup(){
     const fetcher= useFetcher();
+
+    // const { message } = useActionData();
 
     const { data, state } = fetcher;
 
@@ -11,20 +13,10 @@ function NewsletterSignup() {
         if(state==="idle" && data && data.message){
             window.alert(data.message);
         }
-    },[state,data])
-    
-  return (
-    <fetcher.Form method="post" action="/newsletter" className={classes.newsletter}>
-      <input
-        type="email"
-        placeholder="Sign up for newsletter..."
-        name="email"
-        aria-label="Sign up for newsletter"
-        required
-      />
-      <button>Sign up</button>
-    </fetcher.Form>
-  );
-}
+    },[state, data]);
 
-export default NewsletterSignup;
+    return <fetcher.Form method="post" action="/newsletter" className={classes.form}>
+        <input id="email" type="email" name="email" placeholder="Signup for newsletter..." />
+        <button>Signup</button>
+    </fetcher.Form>
+}

@@ -1,0 +1,7 @@
+.card{
+    margin-top: 12vh;
+    background-color: rgb(129, 128, 128);
+    padding-top: 2rem;
+    min-height: 94vh;
+    width:100%;
+}

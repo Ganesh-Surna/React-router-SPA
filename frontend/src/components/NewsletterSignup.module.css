@@ -1,18 +1,24 @@
-.newsletter input,
-.newsletter button {
-  font: inherit;
-  padding: 0.25rem 0.75rem;
-  border-radius: 0;
-  border: none;
+.form{
+    display: flex;
 }
-
-.newsletter button {
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-  cursor: pointer;
+.form input,
+.form button{
+    padding: 0.5rem 1rem;
+    border-radius: 0;
+    outline: none;
+    border: 0;
 }
-
-.newsletter button:hover {
-  background-color: var(--color-primary-300);
-  color: var(--color-gray-800);
+.form input:focus{
+    border:1px solid orange;
+    border-right: none;
+}
+.form button{
+    background-color: white;
+    color:orange;
+    border:1px solid orange;
+}
+.form button:hover,
+.form button:active{
+    color:white;
+    background-color: orange;
 }

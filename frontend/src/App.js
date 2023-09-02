@@ -1,87 +1,65 @@
-// Challenge / Exercise
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-// 1. Add five new (dummy) page components (content can be simple <h1> elements)
-//    - HomePage
-//    - EventsPage
-//    - EventDetailPage
-//    - NewEventPage
-//    - EditEventPage
-// 2. Add routing & route definitions for these five pages
-//    - / => HomePage
-//    - /events => EventsPage
-//    - /events/<some-id> => EventDetailPage
-//    - /events/new => NewEventPage
-//    - /events/<some-id>/edit => EditEventPage
-// 3. Add a root layout that adds the <MainNavigation> component above all page components
-// 4. Add properly working links to the MainNavigation
-// 5. Ensure that the links in MainNavigation receive an "active" class when active
-// 6. Output a list of dummy events to the EventsPage
-//    Every list item should include a link to the respective EventDetailPage
-// 7. Output the ID of the selected event on the EventDetailPage
-// BONUS: Add another (nested) layout route that adds the <EventNavigation> component above all /events... page components
-
-import {createBrowserRouter,RouterProvider} from "react-router-dom";
-
-import RootLayout from "./pages/RootLayout";
-import HomePage from "./pages/Home";
-import EventsPage,{loader as eventsLoaderFun} from "./pages/Events";
-import EventDetailsPage,{loader as eventDetailsLoader, action as deleteEventAction} from "./pages/EventDetails";
-import NewEventPage from "./pages/NewEvent";
-import EditEventPage from "./pages/EditEvent";
-import EventsLayoutPage from "./pages/EventsLayout";
-import ErrorPage from "./pages/Error";
-import {action as commonDynamicAction} from "./components/EventForm";
-import NewsletterPage, { action as newsletterAction } from './pages/Newsletter';
-
+import HomePage from "./pages/HomePage";
+import RootLayoutPage from "./pages/RootLayoutPage";
+import EditEventPage from "./pages/EditEventPage";
+import EventDetailsPage, {loader as eventDetailsLoader, action as deleteAction} from "./pages/EventDetailsPage";
+import EventsPage, { loader as eventsLoader } from "./pages/EventsPage";
+import NewEventPage from "./pages/NewEventPage";
+import ErrorPage from "./pages/ErrorPage";
+import EventsLayoutPage from "./pages/EventsLayoutPage";
+import NewsletterPage,{ action as newsletterAction } from "./pages/NewsletterPage";
+import { action as manipulateFormAction } from "./components/EventForm";
 
 const router=createBrowserRouter([
   {
     path:"/",
-    element:<RootLayout/>,
+    element:<RootLayoutPage/>,
     errorElement:<ErrorPage/>,
     children:[
-      {index:true, element:<HomePage/>},
       {
-        path:"events",
-        element:<EventsLayoutPage/>,
+        index:true, element:<HomePage/>,
+      },
+      {
+        path:"events", element:<EventsLayoutPage/>,
         children:[
           {
-            index:true, 
-            element:<EventsPage/>,
-            loader:eventsLoaderFun,
+            index:true, element:<EventsPage/>,
+            loader: eventsLoader,
           },
           {
             path:":eventId",
-            id:"event-details",
-            loader:eventDetailsLoader,
-            action: deleteEventAction,
+            loader: eventDetailsLoader,
+            id: "event-details",
             children:[
-              // { index:true, element:<EventDetailsPage/>,
-                // action: deleteEventAction,}
-              { path:"", element:<EventDetailsPage/>,},
+              {
+                index:true, element:<EventDetailsPage/>,
+                action: deleteAction,
+              },
               {
                 path:"edit", element:<EditEventPage/>,
-                action: commonDynamicAction,
+                action: manipulateFormAction,
               },
             ]
           },
-          { path:"new", element:<NewEventPage/>,
-            action: commonDynamicAction,
-          },
-          
+          {
+            path:"new", element:<NewEventPage/>,
+            action: manipulateFormAction,
+          }
         ]
       },
       {
-        path: 'newsletter',
-        element: <NewsletterPage />,
-        action: newsletterAction,
-      },
+        path:"newsletter", element:<NewsletterPage/>,
+        action:newsletterAction,
+      }
     ]
-  },
-]);
+  }
+])
 
 function App() {
-  return <RouterProvider router={router}/>;
+  return <>
+    <RouterProvider router={router}/>
+  </>;
 }
 
 export default App;

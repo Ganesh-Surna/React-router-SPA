@@ -1,24 +1,31 @@
 .header {
-  padding: 2rem;
-  display: flex;
-  justify-content: center;
-}
-
-.list {
-  display: flex;
-  gap: 1rem;
-}
-
-.list a {
-  background-color: var(--color-gray-500);
-  color: var(--color-gray-900);
-  padding: 0.5rem 1.5rem;
-  border-radius: 4px;
-  text-decoration: none;
-}
-
-.list a:hover,
-.list a:active,
-.list a.active {
-  background-color: var(--color-primary-600);
-}
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    top:4rem;
+  }
+  
+  .list {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .list a {
+    /* background-color: var(--color-gray-500);
+    color: var(--color-gray-900); */
+    background-color: white;
+    color:rgb(255, 187, 0);
+    border: 1px solid rgb(255, 146, 4);
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+  
+  .list a:hover,
+  .list a:active,
+  .list a.active {
+    /* background-color: var(--color-primary-600); */
+    color:white;
+    background-color: rgb(255, 166, 33);
+  }
